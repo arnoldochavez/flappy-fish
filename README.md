@@ -1,4 +1,4 @@
-# Flappy Fish - WIP
+# [WIP] Flappy Fish
 This Flappy Fish clone is been made for learning purposes, made with Python and Pygame.
 
 Versions:
