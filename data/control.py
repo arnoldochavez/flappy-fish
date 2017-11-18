@@ -70,7 +70,7 @@ class Control( object ):
 	def draw( self ):
 		#DRAW ALL INSTANCES
 		self.display.fill(const.SCREEN_COLOR)
-		for inst in self.instances:
+		for inst in reversed(self.instances):
 			inst.draw(self.display)
 		if self.gameState == const.GAMESTATE_LOSS:
 			surf = pygame.Surface((self.display.get_width(),self.display.get_height()), pygame.SRCALPHA)
