@@ -5,7 +5,8 @@ import pygame
 pygame.font.init()
 
 IMAGE = {
-	"FISH" : pygame.image.load("assets/images/fish.png")
+	"FISH" : pygame.image.load("assets/images/fish.png"),
+	"CORAL" : pygame.image.load("assets/images/coral.png")
 }
 
 FONT = {
