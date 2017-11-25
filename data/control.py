@@ -6,6 +6,7 @@ from . import resources as res
 from . import constants as const
 from .components import player
 from .components import obstacles
+from .components import backgrounds as back
 
 pygame.init()
 
@@ -36,6 +37,10 @@ class Control( object ):
 		self.gameState = const.GAMESTATE_START
 		self.blinkScreenEnd = False
 		self.instance_create(const.SCREEN_WIDTH/2, const.SCREEN_HEIGHT/2,player.Player)
+		for i in range(0, int(const.SCREEN_WIDTH/256)+2):
+			self.instance_create(i*256, const.SCREEN_HEIGHT, back.SandMiddle)
+			self.instance_create(i*256, const.SCREEN_HEIGHT, back.SandBack)
+			self.instance_create(i*256, const.SCREEN_HEIGHT, back.SandFront)
 
 	def update( self ):
 		#UPDATE ALL INSTANCES
@@ -43,6 +48,7 @@ class Control( object ):
 			inst.update()
 		for inst in self.instances:
 			if inst.destroy:
+				inst.destroyed()
 				self.instances.remove(inst)
 
 		#SELF UPDATE STEP
@@ -70,7 +76,8 @@ class Control( object ):
 	def draw( self ):
 		#DRAW ALL INSTANCES
 		self.display.fill(const.SCREEN_COLOR)
-		for inst in reversed(self.instances):
+		self.instances.sort(key=lambda x: x.depth)
+		for inst in self.instances:
 			inst.draw(self.display)
 		if self.gameState == const.GAMESTATE_LOSS:
 			surf = pygame.Surface((self.display.get_width(),self.display.get_height()), pygame.SRCALPHA)
@@ -93,6 +100,8 @@ class Control( object ):
 		self.gameState = state
 
 	def restart_game( self ):
+		for inst in self.instances:
+			inst.destroyed()
 		del self.instances[:]
 		self.start()
 
