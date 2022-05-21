@@ -36,7 +36,6 @@ class Player:
 				self.verSpeed = -8
 			if tools.keyboardCheckPressed(pygame.K_UP):
 				self.control.set_gamestate(const.GAMESTATE_RUN)
-				print(obst.Coral._instances)
 				self.verSpeed = -8
 			#UPDATE
 			self.angle = -self.verSpeed * 3
@@ -49,6 +48,10 @@ class Player:
 				if inst != self:
 					if self.rect.colliderect(inst.rect):
 						self.control.set_gamestate(const.GAMESTATE_LOSS)
+					elif inst.side == const.DIR_UP and self.x > inst.x and not inst.passed:
+						print("PASSED")
+						self.control.score += 1
+						inst.passed = True
 			if self.y >= const.SCREEN_HEIGHT - 32:
 				self.y = const.SCREEN_HEIGHT - 32
 				self.verSpeed = -8

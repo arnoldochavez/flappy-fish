@@ -13,5 +13,6 @@ IMAGE = {
 }
 
 FONT = {
-	"MAIN" : pygame.font.Font("assets/fonts/AlteHaasGroteskBold.ttf", 24)
+	"MAIN" : pygame.font.Font("assets/fonts/Minercraftory.ttf", 18),
+	"SCORE" : pygame.font.Font("assets/fonts/Minercraftory.ttf", 24)
 }

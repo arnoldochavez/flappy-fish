@@ -13,6 +13,7 @@ pygame.init()
 class Control( object ):
 
 	def __init__( self ):
+		self.score = 0
 		self.gameState = const.GAMESTATE_START
 		self.display = pygame.display.set_mode((const.SCREEN_WIDTH, const.SCREEN_HEIGHT))
 		self.done = False
@@ -79,12 +80,13 @@ class Control( object ):
 		self.instances.sort(key=lambda x: x.depth)
 		for inst in self.instances:
 			inst.draw(self.display)
-		if self.gameState == const.GAMESTATE_LOSS:
+		if self.gameState == const.GAMESTATE_RUN:
+			self.draw_text(str(self.score), const.SCREEN_WIDTH / 2, 48, const.ALIGN_CENTER, (255, 255, 255), res.FONT["SCORE"])
+		elif self.gameState == const.GAMESTATE_LOSS:
 			surf = pygame.Surface((self.display.get_width(),self.display.get_height()), pygame.SRCALPHA)
 			surf.fill((255,255,255,self.blinkScreenAlpha))
 			self.display.blit(surf,(0,0))
-		if self.gameState == const.GAMESTATE_START:
-			#self.draw_text("PRESS UP!", const.SCREEN_WIDTH/2, const.SCREEN_HEIGHT - 14, const.ALIGN_CENTER, (255,161,17))
+		elif self.gameState == const.GAMESTATE_START:
 			self.draw_text("PRESS UP!", const.SCREEN_WIDTH/2, const.SCREEN_HEIGHT - 16, const.ALIGN_CENTER, (255,255,255))
 
 	def main( self ):
@@ -106,6 +108,22 @@ class Control( object ):
 		self.start()
 
 	def draw_text( self, text, x, y, align = const.ALIGN_LEFT, color = (0,0,0), font = res.FONT["MAIN"]):
+		# DRAW OUTLINE
+		thickness = 2
+		surf = font.render(text, True, (0, 0, 0))
+		if align == const.ALIGN_LEFT:
+			for i in range(-thickness, thickness + 1):
+				for j in range(-thickness, thickness + 1):
+					self.display.blit(surf, (x + j, y - surf.get_height() + i))
+		elif align == const.ALIGN_CENTER:
+			for i in range(-thickness, thickness + 1):
+				for j in range(-thickness, thickness + 1):
+					self.display.blit(surf, (x - (surf.get_width()/2) + j, y - surf.get_height() + i))
+		elif align == const.ALIGN_RIGHT:
+			for i in range(-thickness, thickness + 1):
+				for j in range(-thickness, thickness + 1):
+					self.display.blit(surf, (x - surf.get_width() + j, y - surf.get_height() + i))
+
 		surf = font.render(text, True, color)
 		if align == const.ALIGN_LEFT:
 			self.display.blit(surf, (x, y - surf.get_height()))

@@ -12,6 +12,7 @@ class Coral:
 	def __init__( self, x, y ):
 		self.x = x
 		self.y = y
+		self.passed = False
 		self.separation = 64
 		self.width = 48
 		self.height = 256
