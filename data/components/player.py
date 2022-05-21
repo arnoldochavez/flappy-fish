@@ -35,6 +35,7 @@ class Player:
 			if self.y > (const.SCREEN_HEIGHT/2) + 32:
 				self.verSpeed = -8
 			if tools.keyboardCheckPressed(pygame.K_UP):
+				tools.playSound("JUMP")
 				self.control.set_gamestate(const.GAMESTATE_RUN)
 				self.verSpeed = -8
 			#UPDATE
@@ -47,18 +48,21 @@ class Player:
 			for inst in obst.Coral._instances:
 				if inst != self:
 					if self.rect.colliderect(inst.rect):
+						tools.playSound("HIT")
 						self.control.set_gamestate(const.GAMESTATE_LOSS)
 					elif inst.side == const.DIR_UP and self.x > inst.x and not inst.passed:
-						print("PASSED")
+						tools.playSound("SCORED")
 						self.control.score += 1
 						inst.passed = True
 			if self.y >= const.SCREEN_HEIGHT - 32:
 				self.y = const.SCREEN_HEIGHT - 32
 				self.verSpeed = -8
+				tools.playSound("HIT")
 				self.control.set_gamestate(const.GAMESTATE_LOSS)
 			#MOVEMENT
 			self.verSpeed = min(self.verSpeed+const.GRAVITY, self.verSpeedMax)
 			if tools.keyboardCheckPressed(pygame.K_UP):
+				tools.playSound("JUMP")
 				self.verSpeed = -8
 			#UPDATE
 			self.angle = -self.verSpeed * 3
@@ -76,7 +80,7 @@ class Player:
 				if tools.keyboardCheckPressed(pygame.K_UP):
 					self.control.restart_game()
 			#UPDATE
-			if (self.verSpeed<0):				
+			if (self.verSpeed<0):
 				self.angle = -self.verSpeed * 3
 			else:
 				self.angle = max(self.angle - 8, -90)

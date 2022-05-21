@@ -1,7 +1,10 @@
 __author__ = "arnoldochavez"
 
+from array import array
+import random
 import pygame
 from . import constants as const
+from . import resources as res
 
 pygame.init()
 
@@ -22,3 +25,10 @@ def keyboardCheckPressed( key ):
 		pressed = True
 	keysList = pygame.key.get_pressed()
 	return pressed
+
+def playSound( sound ):
+	sound = res.SOUND[sound]
+	if type(sound) is list:
+		sound[random.randint(0, len(sound) - 1)].play()
+	else:
+		sound.play()
