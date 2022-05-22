@@ -35,6 +35,7 @@ class Control( object ):
 		self.instance_create(const.SCREEN_WIDTH+64, (const.SCREEN_HEIGHT/2) + randSeparation, obstacles.Coral).side = const.DIR_DOWN		
 
 	def start( self ):
+		self.score = 0
 		self.gameState = const.GAMESTATE_START
 		self.blinkScreenEnd = False
 		self.instance_create(const.SCREEN_WIDTH/2, const.SCREEN_HEIGHT/2,player.Player)
